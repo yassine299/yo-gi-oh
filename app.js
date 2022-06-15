@@ -6,7 +6,7 @@ const Reset = () => {
     window.location.reload();
 }
 
-const search = async () => {
+const search =async (e) => {
     const searchWord = document.querySelector("input").value;
     const Url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=" + searchWord;
     const response = await fetch(Url);
@@ -27,3 +27,4 @@ const search = async () => {
 
 
 element.addEventListener("click", search);
+
