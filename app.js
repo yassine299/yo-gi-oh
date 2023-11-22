@@ -1,30 +1,33 @@
-const cardElemnt = document.querySelector("#cards");
-const element = document.getElementById("mybtn");
-const reset = document.getElementById("#reset");
+// Use const or let consistently for variable declarations
+const cardElement = document.querySelector("#cards");
+const searchButton = document.getElementById("mybtn");
 
-const Reset = () => {
-    window.location.reload();
-}
 
-const search = async () => {
+
+// Use async function instead of async arrow function
+async function search() {
     const searchWord = document.querySelector("input").value;
-    const Url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=" + searchWord;
-    const response = await fetch(Url);
-    const json = await response.json();
+    const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=" + searchWord;
 
-    json.data.forEach((card) => {
-        card.card_images.forEach((img) => {
-            const image = document.createElement("img");
-            // console.log(img.image_url)
-            image.src = img.image_url;
-            cardElemnt.append(image);
+    try {
+        const response = await fetch(url);
+        const json = await response.json();
 
-        })
-    });
+        // Clear previous search results
+        cardElement.innerHTML = "";
 
+        json.data.forEach((card) => {
+            card.card_images.forEach((img) => {
+                const image = document.createElement("img");
+                image.src = img.image_url;
+                cardElement.append(image);
+            });
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle errors here (e.g., display an error message to the user)
+    }
 }
 
-
-
-element.addEventListener("click", search);
-
+// Use addEventListener consistently for better readability
+searchButton.addEventListener("click", search);
